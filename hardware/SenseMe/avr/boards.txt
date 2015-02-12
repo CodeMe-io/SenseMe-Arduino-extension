@@ -1,0 +1,24 @@
+# See: http://code.google.com/p/arduino/wiki/Platforms
+
+menu.cpu=Processor
+
+##############################################################
+
+SenseMe.name=SenseMe
+SenseMe.upload.protocol=avr109
+SenseMe.upload.maximum_size=28672
+SenseMe.upload.speed=57600
+SenseMe.upload.disable_flushing=true
+SenseMe.bootloader.low_fuses=0xff
+SenseMe.bootloader.high_fuses=0xd8
+SenseMe.bootloader.extended_fuses=0xCB
+SenseMe.bootloader.path=caterina-LilyPadUSB
+SenseMe.bootloader.file=Caterina-LilyPadUSB.hex
+SenseMe.bootloader.unlock_bits=0x3F
+SenseMe.bootloader.lock_bits=0x2F
+SenseMe.build.mcu=atmega32u4
+SenseMe.build.f_cpu=8000000L
+SenseMe.build.vid=0x1B4F
+SenseMe.build.pid=0x9208
+SenseMe.build.core=arduino
+SenseMe.build.variant=SenseMe

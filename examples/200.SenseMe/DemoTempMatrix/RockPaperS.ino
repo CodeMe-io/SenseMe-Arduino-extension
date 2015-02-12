@@ -1,0 +1,2 @@
+void RockPaperS(int ran){
+}
