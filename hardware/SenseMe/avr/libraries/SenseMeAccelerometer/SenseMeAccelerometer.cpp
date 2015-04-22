@@ -14,9 +14,10 @@
 * 		codeme.io
 */
 
-#include "pins_arduino.h"
-#include "../Wire/Wire.h"
-#include "SenseMeAccelerometer.h"
+#include <pins_arduino.h>
+//#include "../Wire/Wire.h"
+#include <Wire.h>
+#include <SenseMeAccelerometer.h>
 
 /*---------------------------------------------------------------------------*/
 /**

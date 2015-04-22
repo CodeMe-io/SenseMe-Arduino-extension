@@ -14,9 +14,10 @@
 * 		Engduino team: support@engduino.org
 */
 
-#include "pins_arduino.h"
-#include "../Wire/Wire.h"
-#include "EngduinoMagnetometer.h"
+#include <pins_arduino.h>
+//#include "../Wire/Wire.h"
+#include <EngduinoMagnetometer.h>
+#include <Wire.h>
 
 #if defined (__BOARD_ENGDUINOV2) || defined(__BOARD_ENGDUINOV3)
 /*---------------------------------------------------------------------------*/

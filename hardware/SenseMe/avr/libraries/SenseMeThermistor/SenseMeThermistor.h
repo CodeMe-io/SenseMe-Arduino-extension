@@ -16,27 +16,12 @@
 
 #include <Arduino.h>
 #include <SenseMe.h>
+#include <NTC.h>
 
-enum temperatureUnits {
-  CELSIUS,
-  KELVIN,
-  FAHRENHEIT
-};
 
-class SenseMeThermistorClass 
-{
-	private:
+NTCClass SenseMeThermistor = NTCClass();
 
-	public:
-		SenseMeThermistorClass();
-		void     begin();
-		void     end();
-		float    temperature(temperatureUnits units=CELSIUS);
-		float    temperature(temperatureUnits units, float B, float T0, float R0, float R_Balance);
-		uint16_t temperatureRaw();
-};
-
-extern SenseMeThermistorClass SenseMeThermistor;
+#define Thermistor SenseMeThermistor
 
 #endif
 
