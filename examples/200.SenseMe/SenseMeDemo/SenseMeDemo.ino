@@ -3,15 +3,15 @@
 #include <SenseMeAccelerometer.h>
 #include <SenseMeLEDMatrix.h>
 
-#include <Adafruit_NeoPixel.h>
-
+//#include <Adafruit_NeoPixel.h>
+#include <SenseMeNeopixel.h>
 /*
  SenseMeDemo
 
  Thie is a SinceMeDemo utilises
   - LED Matrix
   - Bluetooth
-  - NeoPixel
+  - NeoPixel - In the cube
   - NTC thermistor
   - Random number
   - Accelerometer
@@ -23,7 +23,7 @@
 
 
 
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+//Adafruit_NeoPixel Neopixel = Adafruit_NeoPixel(NUMNeopixel, PIN, NEO_GRB + NEO_KHZ800);
 
 
 
@@ -99,8 +99,8 @@ void setup()
   setNum = false;
   Serial1.begin(9600); // initialization
   //Serial.begin(9600);
-  pixels.begin();
-  pixels.setPixelColor(0, pixels.Color(0,0,0)); // Moderately bright green color.
+  Neopixel.begin();
+  Neopixel.setPixelColor(0, Neopixel.Color(0,0,0)); // Moderately bright green color.
   
 }
 
@@ -175,9 +175,9 @@ void loop()
 
 
 void setColor() {
-    pixels.setBrightness(brightness),
-    pixels.setPixelColor(0, pixels.Color(r,g,b)); // Moderately bright green color.
-    pixels.show(); // This sends the updated pixel color to the hardware.
+    Neopixel.setBrightness(brightness),
+    Neopixel.setPixelColor(0, Neopixel.Color(r,g,b)); // Moderately bright green color.
+    Neopixel.show(); // This sends the updated pixel color to the hardware.
     if (dir == 0)   {
         if (brightness<255) brightness++;
         else 
