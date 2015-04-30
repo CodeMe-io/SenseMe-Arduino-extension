@@ -12,3 +12,5 @@
 !hardware/SenseMe/
 !hardware/SenseMe/**
     
+!documents/
+!documents/*
