@@ -8,12 +8,16 @@ SenseMeNeopixelClass::SenseMeNeopixelClass() : Adafruit_NeoPixel(1, PIXELPIN, NE
 	setPixelColor(LEDnum, Color(0,0,0)); 
 }
 
+
 void SenseMeNeopixelClass::begin(){
+	pinMode(PIXELPIN, OUTPUT);
+  digitalWrite(PIXELPIN, LOW);
 
 }
 
+
 void SenseMeNeopixelClass::setColor(uint8_t r, uint8_t g, uint8_t b){
-	setPixelColor(LEDnum, r,g,b);
+	setPixelColor(0, r,g,b);
 	show();
 }
 

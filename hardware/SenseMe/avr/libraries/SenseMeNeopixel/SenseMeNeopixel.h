@@ -19,4 +19,4 @@ extern SenseMeNeopixelClass SenseMeNeopixel;
 
 
 #define Pixel SenseMeNeopixel
-#define Neopixel SenseMeNeopixel
+//#define Neopixel SenseMeNeopixel

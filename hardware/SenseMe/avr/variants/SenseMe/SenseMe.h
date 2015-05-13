@@ -51,20 +51,24 @@
 #define I2C_SCL  	 3
 
 //Neopixel parameters
-#define PIXELPIN            10  //pin for NeoPixel
+//#define PIXELPIN            10  //pin for NeoPixel
+#define PIXELPIN            12  //pin for NeoPixel
 #define NUMPIXELS      1  // How many NeoPixel are attached to the Arduino?
 
 #define SPEAKER_PIN  11
 
 // Light sensor 
-#define LIGHTSENSOR	A1
+
+//#define LIGHTSENSOR	A1
+#define LIGHTSENSOR	A2
 
 // Bluetooth control pins
 #define BTCMDPIN	5
 #define BTSTATEPIN	9
 #define BTRESETPIN	4
 
-
+#define BUTTON A1
+#define PULSESENSOR A0
 
 
 #endif
