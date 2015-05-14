@@ -82,27 +82,6 @@ void SenseMeAccelerometerClass::begin()
 	reg |= DATA_RATE_50HZ;
 	writeReg(MMA865x_CTRL_REG1, &reg);
 	
-	writeReg(MMA865x_CTRL_REG1, &reg);
-	
-	
-	// To rest the device
-	reg = 0x40;
-	writeReg(MMA865x_CTRL_REG2, &reg);
-	
-	
-	
-	//interrupt setting
-	//reg |= IPOL_MASK;
-	//Serial.println(reg);
-	reg = 0x03;
-	writeReg(MMA865x_CTRL_REG3, &reg);
-	readReg(MMA865x_CTRL_REG3, &reg);
-	Serial.println(reg);
-	reg = 0x00;
-	writeReg(MMA865x_CTRL_REG4, &reg);
-	reg = 0x00;
-	writeReg(MMA865x_CTRL_REG5, &reg);
-	
 	activate();		// And start it again
 }
 
@@ -161,6 +140,20 @@ void SenseMeAccelerometerClass::xyz(float buf[3])
 		//
 	}
 }
+
+
+/*---------------------------------------------------------------------------*/
+float SenseMeAccelerometerClass::magnitude()
+{
+	float accel[3];
+	SenseMeAccelerometer.xyz(accel);
+	float mag = sqrt((accel[0]*accel[0]) + (accel[1]*accel[1]) + (accel[2]*accel[2]));
+	return mag;
+}
+
+
+
+
 
 /*---------------------------------------------------------------------------*/
 /**

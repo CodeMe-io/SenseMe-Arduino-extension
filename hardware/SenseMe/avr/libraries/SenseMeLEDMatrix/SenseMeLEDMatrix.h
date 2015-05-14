@@ -24,6 +24,7 @@ class SenseMeLEDMatrixClass : public Adafruit_8x8matrix {
  public:
   SenseMeLEDMatrixClass(void);
   void begin(void);
+  void setFace(String mood);
 
  private:
 
