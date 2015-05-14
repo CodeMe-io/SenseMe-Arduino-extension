@@ -9,7 +9,6 @@ int y[8];
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  Serial.println("setup");
   SenseMeLightSensor.begin();
   SenseMeLEDMatrix.begin();
   SenseMeNeopixel.begin();
