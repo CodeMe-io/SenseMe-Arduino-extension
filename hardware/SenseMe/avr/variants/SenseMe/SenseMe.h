@@ -34,7 +34,7 @@
 
 
 // NTC
-#define NTC  		 A1
+//#define NTC  		 A1
 
 
 // Accelerometer connection 
@@ -59,8 +59,6 @@
 
 // Light sensor 
 
-//#define LIGHTSENSOR	A1
-#define LIGHTSENSOR	A2
 
 // Bluetooth control pins
 #define BTCMDPIN	5
@@ -69,6 +67,7 @@
 
 #define BUTTON A1
 #define PULSESENSOR A0
-
+//#define LIGHTSENSOR	A1		//version 0.1
+#define LIGHTSENSOR	A2			//version 0.2
 
 #endif
