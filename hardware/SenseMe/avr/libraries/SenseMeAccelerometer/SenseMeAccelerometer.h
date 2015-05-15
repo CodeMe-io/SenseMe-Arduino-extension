@@ -745,6 +745,9 @@ class SenseMeAccelerometerClass
 		void xyz(float buf[3]);
 		void xyzRaw(uint16_t buf[3]);
 		float magnitude();
+		float getX();
+		float getY();
+		float getZ();
 
 };
 

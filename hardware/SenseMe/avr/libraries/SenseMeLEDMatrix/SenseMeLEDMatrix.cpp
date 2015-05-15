@@ -47,7 +47,7 @@ static const uint8_t PROGMEM
     B01011010,
     B00111100 },
     sleep_bmp[] =
-  { 000000001,
+  { B00000001,
     B00000011,
     B00011100,
     B00001000,
@@ -99,6 +99,22 @@ void SenseMeLEDMatrixClass::setFace(String mood){
       SenseMeLEDMatrix.drawBitmap(0, 0, yawn_bmp, 8, 8, LED_ON);
       SenseMeLEDMatrix.writeDisplay();
   }
+}
+
+void SenseMeLEDMatrixClass::scrollText(String msg) {
+	SenseMeLEDMatrix.clear();
+	SenseMeLEDMatrix.setTextWrap(false);
+	SenseMeLEDMatrix.setTextColor(LED_ON);
+	
+	int len = msg.length();
+	for (int8_t x=0; x>=-len * 6; x--) {
+      SenseMeLEDMatrix.clear();
+      SenseMeLEDMatrix.setCursor(x,0);
+      SenseMeLEDMatrix.print(msg);
+      SenseMeLEDMatrix.writeDisplay();
+    delay(100);
+  }
+	
 }
 
 

@@ -17,6 +17,9 @@
 
 #include "Adafruit_LEDBackpack.h"
 
+
+
+
 //#ifndef __SENSEMELEDMATRIX_H__
 //#define __SENSEMELEDMATRIX_H__
 
@@ -25,7 +28,7 @@ class SenseMeLEDMatrixClass : public Adafruit_8x8matrix {
   SenseMeLEDMatrixClass(void);
   void begin(void);
   void setFace(String mood);
-
+  void scrollText(String msg);
  private:
 
 

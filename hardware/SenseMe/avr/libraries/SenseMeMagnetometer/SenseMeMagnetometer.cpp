@@ -135,6 +135,94 @@ void EngduinoMagnetometerClass::xyz(float buf[3])
 
 /*---------------------------------------------------------------------------*/
 /**
+* \brief Read the xyz values from the magnetometer
+* \param buf A buffer of floats to put the magnetometer values into
+*
+* Get the instantaneous magnetometer values for the xyz axes. Convert the
+* 16 bit digital value to a float value. 
+*
+*/
+float EngduinoMagnetometerClass::getX()
+{	uint8_t reg[6];
+	
+
+	// Check to see if XYZ data is ready to read
+	readReg(FXMS3110_DR_STATUS, reg);
+	if (reg[0] & ZYXDR_MASK != 0)  {
+		
+		// Do a multiple read starting with X_MSB
+		// because this is the first numbered
+		// Read all the MSBs and LSBs = 6 registers
+		//
+		readReg(FXMS3110_OUT_X_MSB, reg, 6);
+		
+		// The most significant 8 bits are stored
+		// in the MSB register, the other 8 bits
+		// the LSB register. The complete 16 bit
+		// number is stored as 2's complement
+		// 
+		
+		float f = (reg[0] << 8) + reg[1];
+		buf[i] = f;
+	}
+
+}
+
+float EngduinoMagnetometerClass::getY()
+{	uint8_t reg[6];
+	
+
+	// Check to see if XYZ data is ready to read
+	readReg(FXMS3110_DR_STATUS, reg);
+	if (reg[0] & ZYXDR_MASK != 0)  {
+		
+		// Do a multiple read starting with X_MSB
+		// because this is the first numbered
+		// Read all the MSBs and LSBs = 6 registers
+		//
+		readReg(FXMS3110_OUT_X_MSB, reg, 6);
+		
+		// The most significant 8 bits are stored
+		// in the MSB register, the other 8 bits
+		// the LSB register. The complete 16 bit
+		// number is stored as 2's complement
+		// 
+		
+		float f = (reg[2] << 8) + reg[3];
+		buf[i] = f;
+	}
+
+}
+
+float EngduinoMagnetometerClass::getZ()
+{	uint8_t reg[6];
+	
+
+	// Check to see if XYZ data is ready to read
+	readReg(FXMS3110_DR_STATUS, reg);
+	if (reg[0] & ZYXDR_MASK != 0)  {
+		
+		// Do a multiple read starting with X_MSB
+		// because this is the first numbered
+		// Read all the MSBs and LSBs = 6 registers
+		//
+		readReg(FXMS3110_OUT_X_MSB, reg, 6);
+		
+		// The most significant 8 bits are stored
+		// in the MSB register, the other 8 bits
+		// the LSB register. The complete 16 bit
+		// number is stored as 2's complement
+		// 
+		
+		float f = (reg[4] << 8) + reg[5];
+		buf[i] = f;
+	}
+
+}
+
+
+/*---------------------------------------------------------------------------*/
+/**
 * \brief Read the temperature value from the magnetometer
 * \return The 8 bit temperature value in 2s complement - values lie between
 *         -40°C and 125°C, but are uncalibrated.

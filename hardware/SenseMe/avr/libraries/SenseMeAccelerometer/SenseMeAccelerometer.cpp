@@ -82,6 +82,10 @@ void SenseMeAccelerometerClass::begin()
 	reg |= DATA_RATE_50HZ;
 	writeReg(MMA865x_CTRL_REG1, &reg);
 	
+	// Set interrupt pin 1 low
+	reg = 0x03;
+	writeReg(MMA865x_CTRL_REG3, &reg);
+	
 	activate();		// And start it again
 }
 
@@ -141,6 +145,133 @@ void SenseMeAccelerometerClass::xyz(float buf[3])
 	}
 }
 
+/*---------------------------------------------------------------------------*/
+/**
+* \brief Read the x values in g from the accelerometer
+* \param buf A buffer of floats to put the accelerometer values in g into
+*
+* Get the instantaneous accelerometer values for the x axes. Convert the
+* 12 bit digital value to a float value that is expressed in g. 
+*
+*/
+float SenseMeAccelerometerClass::getX()
+{	uint8_t reg[6];
+	float buf=0;
+	
+	// Check to see if XYZ data is ready to read
+	readReg(MMA865x_STATUS_00, reg);
+	if (reg[0] & ZYXDR_MASK != 0)  {
+		
+		// Do a multiple read starting with X_MSB
+		// because this is the first numbered
+		// Read all the MSBs and LSBs = 6 registers
+		//
+		readReg(MMA865x_OUT_X_MSB, reg, 6);
+		
+		// Now convert the value to g.
+		// At 2g full scale, 1g = 1024 counts
+		// The most significant 8 bits are stored
+		// in the MSB register, the other 4 bits
+		// are in the top of the LSB register, making
+		// the number a factor of 16 too big. The
+		// complete 12 bit number is stored as
+		// 2's complement
+		// 
+        float f = (reg[0] << 8) + reg[1];
+			f = f / (16 * 1024);	// Put the number into the right range
+			buf = f;
+		// TODO: Could take the cailbration (offset)
+		// registers into account
+		//
+	}
+	return buf;
+}
+
+/*---------------------------------------------------------------------------*/
+/**
+* \brief Read the y values in g from the accelerometer
+* \param buf A buffer of floats to put the accelerometer values in g into
+*
+* Get the instantaneous accelerometer values for the x axes. Convert the
+* 12 bit digital value to a float value that is expressed in g. 
+*
+*/
+float SenseMeAccelerometerClass::getY()
+{	uint8_t reg[6];
+	float buf=0;
+	
+	// Check to see if XYZ data is ready to read
+	readReg(MMA865x_STATUS_00, reg);
+	if (reg[0] & ZYXDR_MASK != 0)  {
+		
+		// Do a multiple read starting with X_MSB
+		// because this is the first numbered
+		// Read all the MSBs and LSBs = 6 registers
+		//
+		readReg(MMA865x_OUT_X_MSB, reg, 6);
+		
+		// Now convert the value to g.
+		// At 2g full scale, 1g = 1024 counts
+		// The most significant 8 bits are stored
+		// in the MSB register, the other 4 bits
+		// are in the top of the LSB register, making
+		// the number a factor of 16 too big. The
+		// complete 12 bit number is stored as
+		// 2's complement
+		// 
+		float f = (reg[2] << 8) + reg[3];
+			f = f / (16 * 1024);	// Put the number into the right range
+			buf = f;
+		
+		// TODO: Could take the cailbration (offset)
+		// registers into account
+		//
+	}
+	return buf;
+}
+
+/*---------------------------------------------------------------------------*/
+/**
+* \brief Read the z values in g from the accelerometer
+* \param buf A buffer of floats to put the accelerometer values in g into
+*
+* Get the instantaneous accelerometer values for the x axes. Convert the
+* 12 bit digital value to a float value that is expressed in g. 
+*
+*/
+float SenseMeAccelerometerClass::getZ()
+{	uint8_t reg[6];
+	float buf = 0;
+	
+	// Check to see if XYZ data is ready to read
+	readReg(MMA865x_STATUS_00, reg);
+	if (reg[0] & ZYXDR_MASK != 0)  {
+		
+		// Do a multiple read starting with X_MSB
+		// because this is the first numbered
+		// Read all the MSBs and LSBs = 6 registers
+		//
+		readReg(MMA865x_OUT_X_MSB, reg, 6);
+		
+		// Now convert the value to g.
+		// At 2g full scale, 1g = 1024 counts
+		// The most significant 8 bits are stored
+		// in the MSB register, the other 4 bits
+		// are in the top of the LSB register, making
+		// the number a factor of 16 too big. The
+		// complete 12 bit number is stored as
+		// 2's complement
+		// 
+		float f = (reg[4] << 8) + reg[5];
+			f = f / (16 * 1024);	// Put the number into the right range
+			buf = f;
+		
+		// TODO: Could take the cailbration (offset)
+		// registers into account
+		//
+	}
+	return buf;
+}
 
 /*---------------------------------------------------------------------------*/
 float SenseMeAccelerometerClass::magnitude()

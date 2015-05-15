@@ -220,6 +220,9 @@ class EngduinoMagnetometerClass
 		void   end();
 		void   xyz(float buf[3]);
 		int8_t temperature();
+		float getX();
+		float getY();
+		float getZ();
 
 };
 
