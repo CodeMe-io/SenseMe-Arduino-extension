@@ -17,7 +17,7 @@
 
 #include "pins_arduino.h"
 #include "SenseMeLightSensor.h"
-
+#include <Wire.h>
 
 /*---------------------------------------------------------------------------*/
 /**
@@ -38,6 +38,18 @@ SenseMeLightSensorClass::SenseMeLightSensorClass()
 void SenseMeLightSensorClass::begin() 
 {	
 	pinMode(LIGHTSENSOR, INPUT);
+	
+	//The light sensor and accelerometer interrupt share the same pin at the moment, 
+	//hence, we a workaround, we need to configure the Accelerometer to set interrupt low. 
+	//This may be removed in the next version of hardware
+	uint8_t reg;
+	reg = 0x01;
+	//writeReg(0x2C, &reg);		//0x2c is MMA865x_CTRL_REG3
+	Wire.beginTransmission(0x1D); //MMA865x_IIC_ADDRESS
+	Wire.write(0x2C);
+	Wire.write(&reg, 1);
+	Wire.endTransmission();
+	
 }
 
 /*---------------------------------------------------------------------------*/

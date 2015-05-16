@@ -82,10 +82,6 @@ void SenseMeAccelerometerClass::begin()
 	reg |= DATA_RATE_50HZ;
 	writeReg(MMA865x_CTRL_REG1, &reg);
 	
-	// Set interrupt pin 1 low
-	reg = 0x03;
-	writeReg(MMA865x_CTRL_REG3, &reg);
-	
 	activate();		// And start it again
 }
 
