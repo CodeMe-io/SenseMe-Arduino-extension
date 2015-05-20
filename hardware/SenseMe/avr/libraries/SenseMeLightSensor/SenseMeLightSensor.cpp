@@ -37,8 +37,8 @@ SenseMeLightSensorClass::SenseMeLightSensorClass()
 */
 void SenseMeLightSensorClass::begin() 
 {	
-	pinMode(LIGHTSENSOR, INPUT);
-	
+	//pinMode(LIGHTSENSOR, INPUT);
+	delay(500);
 	//The light sensor and accelerometer interrupt share the same pin at the moment, 
 	//hence, we a workaround, we need to configure the Accelerometer to set interrupt low. 
 	//This may be removed in the next version of hardware
@@ -50,6 +50,9 @@ void SenseMeLightSensorClass::begin()
 	Wire.write(&reg, 1);
 	Wire.endTransmission();
 	
+	
+	//set pin to input
+	pinMode(LIGHTSENSOR, INPUT);
 }
 
 /*---------------------------------------------------------------------------*/
