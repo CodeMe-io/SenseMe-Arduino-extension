@@ -3,8 +3,8 @@
 void tempLight() {
     // Get the temperature
     //
-    float temp = SenseMeThermistor.temperature(CELSIUS);
-    
+    //float temp = SenseMeThermistor.temperature(CELSIUS);
+    float temp = SHT2x.GetTemperature();
     // Print the temperature
     Serial.print("Temp is: ");
     Serial.println(temp);

@@ -5,6 +5,7 @@
 
 //#include <Adafruit_NeoPixel.h>
 #include <SenseMeNeopixel.h>
+#include <SHT2x.h>
 /*
  SenseMeDemo
 
@@ -12,7 +13,6 @@
   - LED Matrix
   - Bluetooth
   - NeoPixel - In the cube
-  - NTC thermistor
   - Random number
   - Accelerometer
  If you put the SenseMe cube with the transparent side on the top, it reads temperature and display the reading in Celcius
@@ -89,7 +89,7 @@ static const uint8_t PROGMEM
 void setup()
 {
   Serial.begin(115200);
-  SenseMeThermistor.begin();
+  //SenseMeThermistor.begin();
   
   SenseMeLEDMatrix.begin();  // pass in the address
   SenseMeAccelerometer.begin();
@@ -99,8 +99,8 @@ void setup()
   setNum = false;
   Serial1.begin(9600); // initialization
   //Serial.begin(9600);
-  Neopixel.begin();
-  Neopixel.setPixelColor(0, Neopixel.Color(0,0,0)); // Moderately bright green color.
+  SenseMeNeopixel.begin();
+  SenseMeNeopixel.setColor(0,0,0); 
   
 }
 
@@ -175,9 +175,9 @@ void loop()
 
 
 void setColor() {
-    Neopixel.setBrightness(brightness),
-    Neopixel.setPixelColor(0, Neopixel.Color(r,g,b)); // Moderately bright green color.
-    Neopixel.show(); // This sends the updated pixel color to the hardware.
+    SenseMeNeopixel.setBrightness(brightness),
+    SenseMeNeopixel.setColor(r,g,b); // Moderately bright green color.
+    SenseMeNeopixel.show(); // This sends the updated pixel color to the hardware.
     if (dir == 0)   {
         if (brightness<255) brightness++;
         else 
