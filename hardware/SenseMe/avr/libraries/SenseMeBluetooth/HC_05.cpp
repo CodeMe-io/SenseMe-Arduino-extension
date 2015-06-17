@@ -5,6 +5,7 @@
 #include <Arduino.h>
 #include <HC_05.h>
 
+
 //#define DEBUG
 #ifdef DEBUG
 #define PRINTLN	Serial.println
@@ -15,6 +16,7 @@
 #endif
 
 //class definition
+
 HC_05::HC_05(int cmdPin, int statePin, int resetPin)
 {
     pinMode(cmdPin, OUTPUT);
@@ -78,6 +80,21 @@ void HC_05::setSlave()
   sendCommand("AT+ROLE=0");
 }
 
+void HC_05::getDeviceList()
+{
+  sendCommand("AT+INQ");
+}
+
+// Set the BT device to Slave
+void HC_05::setPairingMode(pairingMode mode=RANDOM)
+{
+  if (mode == SPECIFIC)
+		sendCommand("AT+CMODE=1");
+   else
+        sendCommand("AT+CMODE=0");
+}
+
+
 //return a single character 
 char HC_05::readChar()
 {
@@ -116,6 +133,8 @@ void HC_05::reset(void)  //200, 2000. 500
   digitalWrite(_resetPin, HIGH);
   delay(500);
 }
+
+
 
 void HC_05::cmdStart() {
   setCmdMode(1);

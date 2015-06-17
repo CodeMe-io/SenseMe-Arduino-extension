@@ -1,6 +1,6 @@
-#include <Adafruit_NeoPixel.h>
-#include <SenseMe.h>
-#include <SenseMeNeopixel.h>
+#include "Adafruit_NeoPixel.h"
+#include "SenseMe.h"
+#include "SenseMeNeopixel.h"
 
 #define LEDnum	0
 

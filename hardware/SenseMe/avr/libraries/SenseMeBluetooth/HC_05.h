@@ -2,6 +2,8 @@
    \author: Venus Shum
 */
 
+#include <Arduino.h>
+
 #define BTSERIAL Serial1
 #define sdelay	200
 
@@ -10,6 +12,11 @@
 #define ATGETMODULENAME "AT+NAME?"
 #define ATSETMODULENAME "AT+NAME="
 #define ATGETVERSION "AT+VERSION?"
+
+enum pairingMode {
+	RANDOM,
+	SPECIFIC
+};
 
 class HC_05 
 {
@@ -24,8 +31,10 @@ public:
 	void getDeviceAddr();
 	void setMaster();
 	void setSlave();
+	void setPairingMode(pairingMode mode);
 	char readChar();
-	
+	void getDeviceList();
+	void sendCommand(String);
 private:
 	bool cmdMode;
     int _cmdPin;
@@ -35,7 +44,7 @@ private:
     char _buffer[32];
 	void cmdStart();
 	void cmdEnd();
-	void sendCommand(String);
+	
 	
 };
 
