@@ -1,4 +1,3 @@
-#include <SenseMeThermistor.h>
 #include <Wire.h>
 #include <SenseMeAccelerometer.h>
 #include <SenseMeLEDMatrix.h>
@@ -35,7 +34,7 @@ String content = "";
 char character;
 char incomingByte;  // incoming data
 
-boolean DEBUG = false;
+boolean DEBUG = true;
 uint8_t brightness=0, dir=0;
 uint8_t state=0, r=0, g=0, b=255;
 
