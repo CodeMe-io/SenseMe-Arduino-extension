@@ -64,10 +64,13 @@
 #define BTCMDPIN	5
 #define BTSTATEPIN	9
 #define BTRESETPIN	4
+#define BTENABLE	6
 
 #define BUTTON A1
 #define PULSESENSOR A0
 //#define LIGHTSENSOR	A1		//version 0.1
 #define LIGHTSENSOR	A2			//version 0.2
+#define BLUETOOTHENABLE	A7
+ 
 
 #endif

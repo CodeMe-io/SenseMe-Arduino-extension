@@ -18,10 +18,12 @@
 * 		Venus Shum
 */
 
-#include "pins_arduino.h"
-#include "SenseMeButton.h"
+#include <pins_arduino.h>
+#include <SenseMeButton.h>
+#include <TimerThree.h>
 
 
+static int timerValue = 10000;	// timer routine in microseconds. 50ms    
 
 /*---------------------------------------------------------------------------*/
 /**
@@ -33,6 +35,8 @@ SenseMeButtonClass::SenseMeButtonClass()
 {
 }
 
+
+
 /*---------------------------------------------------------------------------*/
 /**
 * \brief begin function - must be called before using other functions
@@ -42,6 +46,7 @@ SenseMeButtonClass::SenseMeButtonClass()
 * is not provided.
 *  
 */
+
 void SenseMeButtonClass::begin(long debounceDelay) 
 {	
 	lastChangeTime   = 0;   	// The last time the button input changed
@@ -49,7 +54,7 @@ void SenseMeButtonClass::begin(long debounceDelay)
 	fallingEdge      = true;	// Whether we're looking for a falling or rising edge in the ISR
 	wasPressedState  = false;	// Whether the button has been pressed since we last checked
 	wasReleasedState = false;	// Whether the button has been released since we last checked
-	
+
 	
 	// Store the given debounce delay
 	//
@@ -59,20 +64,11 @@ void SenseMeButtonClass::begin(long debounceDelay)
 	//
 	pinMode(BUTTON, INPUT);
 	
-	// The button is connected to PE6/INT.6
-	//
-	// And set up for an interrupt on INT.6 to be taken on either a falling
-	// (pressed) or rising (released) edge, since we allow users to watch
-	// either. 
-	//
-	cli();
-	EICRB &= ~((1<<ISC61) | (1<<ISC60)); 	// Clear bits
-	EICRB |= (1<<ISC61); 					// And set to interrupt on a falling transition
-	EIMSK |= (1<<INT6); 					// External pin interrupt enable.
-	sei();
+	// Use Timethree to detect interrupt
+	
+	Timer3.initialize(timerValue);	//time in microsection
+	Timer3.attachInterrupt(timercallback, timerValue); 
 
-	// Reset the wasPressed/wasReleased state
-	//
 	reset();
 }
 
@@ -88,7 +84,7 @@ void SenseMeButtonClass::end()
 {
 	// Disable the button pin interrupt
 	//
-	EIMSK &= ~(1<<INT6); 					// External pin interrupt disable.
+	Timer3.stop();
 
 	// Reset the wasPressed/wasReleased state
 	//
@@ -211,56 +207,59 @@ void SenseMeButtonClass::reset()
 }
 
 
+
+
+
 /*---------------------------------------------------------------------------*/
 /**
-* \brief ISR for INT.6 on the ATMega32U4. This is connected to the button.
-*
-* This ISR is set to go off on either edge, but we change which edge
-* depending on whether we last saw a falling edge or a rising edge. This
-* seems overkill, but trying to implement this ISR to react to a change of
-* any description doesn't work well, because we can't tell which direction
-* the change is in.
-* Given we have an edge, set the state of the button and whether it was
-* pressed or released, but only if the switch isn't bouncing. We determine
-* whether it is bouncing by looking at how long it's been stable for; if this
-* is long enough, then we regard this as being the first edge (button not
-* bouncing) and change state. If it is not, we simply record the current
-* time as the time of the last change.
+* TimerThree Timer call back
 * 
 */
-ISR(INT6_vect)
+void SenseMeButtonClass::timercallback()
 {	
-	if (SenseMeButton.fallingEdge) {
-		if ((millis() - SenseMeButton.lastChangeTime) > SenseMeButton.debounceDelayTime) {
-			// We have a falling edge and we're not bouncing
-			SenseMeButton.buttonState      = true;
-			SenseMeButton.wasPressedState  = true;
+	int newbuttonState = digitalRead(BUTTON);
+	
+	
+	if (newbuttonState != SenseMeButton.lastState) {
+		Serial.print(1);	
+		if (SenseMeButton.fallingEdge) {
+			Serial.print(2);
+			if ((millis() - SenseMeButton.lastChangeTime) > SenseMeButton.debounceDelayTime) {
+				// We have a falling edge and we're not bouncing
+				Serial.print(3);
+				SenseMeButton.buttonState      = true;
+				SenseMeButton.wasPressedState  = true;
+				//SenseMeButton.buttonInterrupted = true;		//for use in Application code
+			}
+			if (SenseMeButton.buttonState) {
+				// Now we should look for a non-bouncing rising edge
+				Serial.print(4);
+				SenseMeButton.fallingEdge = false;		
+			}
 		}
-		if (SenseMeButton.buttonState) {
-			// Now we should look for a non-bouncing rising edge
-			SenseMeButton.fallingEdge = false;
-			EICRB |= ((1<<ISC61) | (1<<ISC60)); 	// Set to interrupt on rising transition		
+		
+		else {
+			if ((millis() - SenseMeButton.lastChangeTime) > SenseMeButton.debounceDelayTime) {
+				// We have a rising edge and we're not bouncing
+				Serial.print(5);
+				SenseMeButton.buttonState 	 = false;
+				SenseMeButton.wasReleasedState = true;
+			}
+			if (!SenseMeButton.buttonState) {
+				// Now we should look for a non-bouncing falling edge
+				Serial.print(6);
+				SenseMeButton.fallingEdge = true;
+			}
 		}
-	}
-	else {
-		if ((millis() - SenseMeButton.lastChangeTime) > SenseMeButton.debounceDelayTime) {
-			// We have a rising edge and we're not bouncing
-			SenseMeButton.buttonState 	 = false;
-			SenseMeButton.wasReleasedState = true;
-		}
-		if (!SenseMeButton.buttonState) {
-			// Now we should look for a non-bouncing falling edge
-			SenseMeButton.fallingEdge = true;
-			EICRB &= ~((1<<ISC61) | (1<<ISC60)); 	// Clear bits
-			EICRB |= (1<<ISC61); 					// And set to interrupt on falling transition
-		}
+		
+		// This is a change, so we record that fact.
+		//
+		SenseMeButton.lastChangeTime = millis();
 	}
 	
-	// This is a change, so we record that fact.
-	//
-	SenseMeButton.lastChangeTime = millis();
+	SenseMeButton.lastState = newbuttonState;
+	
 }
-
 
 /*---------------------------------------------------------------------------*/
 /*

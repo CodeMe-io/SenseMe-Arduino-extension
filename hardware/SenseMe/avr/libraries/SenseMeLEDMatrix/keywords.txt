@@ -4,7 +4,9 @@
 # Class
 #######################################
 
-SenseMeAccelerometer KEYWORD1
+SenseMeLEDMatrix KEYWORD1
+SenseMeLEDOne KEYWORD1
+SenseMeLEDTwo KEYWORD1
 
 #######################################
 # Methods and Functions 

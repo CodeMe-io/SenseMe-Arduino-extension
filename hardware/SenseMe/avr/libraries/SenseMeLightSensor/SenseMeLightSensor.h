@@ -18,7 +18,7 @@
 #include <Arduino.h>
 #include <SenseMe.h>
 
-
+/*
 
 static const uint8_t PROGMEM
   smile_bmp[] =
@@ -76,7 +76,7 @@ static const uint8_t PROGMEM
     B01000000,
     B11100000 }
       ;
-	  
+*/
 
 /***********************************************************************************************\
 * Public prototypes

@@ -21,8 +21,10 @@ enum pairingMode {
 class HC_05 
 {
 public:
-    HC_05(int cmdPin, int statePin, int resetPin);
+    HC_05(int cmdPin, int statePin, int resetPin, int enablePin);
 	void begin(void);
+	void start(void);
+	void stop(void);
 	void reset(void);
 	void printVersion(void);
 	void setCmdMode(int);
@@ -40,11 +42,10 @@ private:
     int _cmdPin;
 	int _resetPin;
     int _statePin;
+	int _enablePin;
 	int _bufsize;
     char _buffer[32];
 	void cmdStart();
 	void cmdEnd();
-	
-	
 };
 

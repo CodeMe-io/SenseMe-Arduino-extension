@@ -4,6 +4,7 @@
 
 #include <Arduino.h>
 #include <HC_05.h>
+ 
 
 
 //#define DEBUG
@@ -17,7 +18,7 @@
 
 //class definition
 
-HC_05::HC_05(int cmdPin, int statePin, int resetPin)
+HC_05::HC_05(int cmdPin, int statePin, int resetPin, int enablePin)
 {
     pinMode(cmdPin, OUTPUT);
     _cmdPin = cmdPin;
@@ -30,6 +31,10 @@ HC_05::HC_05(int cmdPin, int statePin, int resetPin)
 	_resetPin = resetPin;
 
     _bufsize = sizeof(_buffer)/sizeof(char);
+	
+	_enablePin = enablePin;
+	
+	
 }
 
 // Begin initialisation
@@ -38,7 +43,25 @@ void HC_05::begin(void)
 #ifdef DEBUG
     Serial.begin(9600);
 #endif
-	BTSERIAL.begin(38400);
+	//BTSERIAL.begin(9600);		//default non-AT Command mode
+	pinMode(_enablePin, OUTPUT);
+	digitalWrite(_enablePin, LOW);
+	//Reset Bluetooth
+	digitalWrite(_resetPin, LOW);
+	digitalWrite(_resetPin, HIGH);
+	
+}
+
+void HC_05::start(void) {
+	digitalWrite(_enablePin, LOW);
+	//Reset Bluetooth
+	digitalWrite(_resetPin, LOW);
+	digitalWrite(_resetPin, HIGH);
+	
+}
+
+void HC_05::stop(void) {
+	digitalWrite(_enablePin, HIGH);
 }
 
 
@@ -47,6 +70,7 @@ void HC_05::printVersion()
 {
   sendCommand("AT+VERSION?");
 }
+
 
 // Set the name of the BT module.
 void HC_05::setModuleName(String name)
@@ -145,7 +169,6 @@ void HC_05::cmdEnd() {
 }
 
 void HC_05::sendCommand(String cmdStr) {
-  //Serial1.begin(38400);
   cmdStart();
   BTSERIAL.println("AT");
   delay(1000);

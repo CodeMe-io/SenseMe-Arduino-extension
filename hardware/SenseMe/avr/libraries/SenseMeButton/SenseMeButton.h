@@ -20,7 +20,8 @@
 #define DEBOUNCE_DELAY 50
 
 // Needed to ensure correct linkage between C++ and C linkage of ISR
-extern "C" void INT6_vect(void) __attribute__ ((signal));
+//extern "C" void INT6_vect(void) __attribute__ ((signal));
+
 
 class SenseMeButtonClass 
 {
@@ -30,33 +31,30 @@ class SenseMeButtonClass
 		 * which we use for timing, returns a long and we would otherwise encounter
 		 * problems with wrapping
 		 */
-		volatile long lastChangeTime;   // The last time the button input changed
-		volatile bool buttonState; 		// Whether the button is currently pressed
-		volatile bool fallingEdge;		// Whether we're looking for a falling or rising edge in the ISR
-		volatile bool wasPressedState;	// Whether the button has been pressed since we last checked
-		volatile bool wasReleasedState;	// Whether the button has been released since we last checked
+		long lastChangeTime;   // The last time the button input changed
+		bool buttonState; 		// Whether the button is currently pressed
+		bool fallingEdge;		// Whether we're looking for a falling or rising edge in the ISR
+		bool wasPressedState;	// Whether the button has been pressed since we last checked
+		bool wasReleasedState;	// Whether the button has been released since we last checked
 		long debounceDelayTime;			// How long we will wait until saying the switch is settled
+		bool lastState;
 
 	public:
 		SenseMeButtonClass();
+		//bool buttonInterrupted;
 		void begin(long debounceDelay=DEBOUNCE_DELAY);
 		void end();
 		void reset();
-
 		bool isPressed();
 		void waitUntilPressed();
 		void waitUntilReleased();
 		bool wasPressed();
 		bool wasReleased();
-
-		/*
-		 * The ISR needs access to the private variables, so we declare it
-		 * a friend of the class
-		 */
-		friend void INT6_vect();
+		static void timercallback();
 };
 
 extern SenseMeButtonClass SenseMeButton;
+
 
 #endif
 
