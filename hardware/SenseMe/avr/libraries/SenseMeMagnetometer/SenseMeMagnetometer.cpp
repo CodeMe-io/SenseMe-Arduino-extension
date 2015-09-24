@@ -1,7 +1,7 @@
 /**
-* \addtogroup EngduinoMagnetometer
+* \addtogroup SenseMeMagnetometer
 *
-* This is the driver code for Magnetometer on the Engduino
+* This is the driver code for Magnetometer on the SenseMe
 * In v2.1 this magnetometer is a freescale FXMS3110
 *
 * @{
@@ -9,24 +9,23 @@
 
 /**
 * \file 
-* 		Engduino magnetometer driver
+* 		SenseMe magnetometer driver
 * \author
-* 		Engduino team: support@engduino.org
+* 		SenseMe team: support@SenseMe.org
 */
 
 #include <pins_arduino.h>
 //#include "../Wire/Wire.h"
-#include <EngduinoMagnetometer.h>
+#include <SenseMeMagnetometer.h>
 #include <Wire.h>
 
-#if defined (__BOARD_ENGDUINOV2) || defined(__BOARD_ENGDUINOV3)
 /*---------------------------------------------------------------------------*/
 /**
 * \brief Constructor
 * 
 * C++ constructor for this class. Empty.
 */
-EngduinoMagnetometerClass::EngduinoMagnetometerClass()
+SenseMeMagnetometerClass::SenseMeMagnetometerClass()
 {
 }
 
@@ -41,7 +40,7 @@ EngduinoMagnetometerClass::EngduinoMagnetometerClass()
 * We set the sampling rate to 10Hz, but where the values are from a heavily
 * oversampled set of values 
 */
-void EngduinoMagnetometerClass::begin() 
+void SenseMeMagnetometerClass::begin() 
 {	uint8_t reg;
 
 	// Join I2C bus as master
@@ -91,7 +90,7 @@ void EngduinoMagnetometerClass::begin()
 * Send the magnetometer to sleep
 *
 */
-void EngduinoMagnetometerClass::end() 
+void SenseMeMagnetometerClass::end() 
 {
 	standby();		// Stop the magnetometer
 }
@@ -106,7 +105,7 @@ void EngduinoMagnetometerClass::end()
 * 16 bit digital value to a float value. 
 *
 */
-void EngduinoMagnetometerClass::xyz(float buf[3])
+void SenseMeMagnetometerClass::xyz(float buf[3])
 {	uint8_t reg[6];
 	
 
@@ -142,9 +141,9 @@ void EngduinoMagnetometerClass::xyz(float buf[3])
 * 16 bit digital value to a float value. 
 *
 */
-float EngduinoMagnetometerClass::getX()
+float SenseMeMagnetometerClass::getX()
 {	uint8_t reg[6];
-	
+	float result;
 
 	// Check to see if XYZ data is ready to read
 	readReg(FXMS3110_DR_STATUS, reg);
@@ -163,14 +162,16 @@ float EngduinoMagnetometerClass::getX()
 		// 
 		
 		float f = (reg[0] << 8) + reg[1];
-		buf[i] = f;
+		result = f;
 	}
+	return result;
 
 }
 
-float EngduinoMagnetometerClass::getY()
+float SenseMeMagnetometerClass::getY()
 {	uint8_t reg[6];
-	
+	float result;
+
 
 	// Check to see if XYZ data is ready to read
 	readReg(FXMS3110_DR_STATUS, reg);
@@ -189,14 +190,16 @@ float EngduinoMagnetometerClass::getY()
 		// 
 		
 		float f = (reg[2] << 8) + reg[3];
-		buf[i] = f;
+		result = f;
 	}
+	return result;
 
 }
 
-float EngduinoMagnetometerClass::getZ()
+float SenseMeMagnetometerClass::getZ()
 {	uint8_t reg[6];
-	
+	float result;
+
 
 	// Check to see if XYZ data is ready to read
 	readReg(FXMS3110_DR_STATUS, reg);
@@ -215,8 +218,9 @@ float EngduinoMagnetometerClass::getZ()
 		// 
 		
 		float f = (reg[4] << 8) + reg[5];
-		buf[i] = f;
+		result = f;
 	}
+	return result;
 
 }
 
@@ -237,7 +241,7 @@ float EngduinoMagnetometerClass::getZ()
 * temperature data is updated on every measurement cycle.
 *
 */
-int8_t EngduinoMagnetometerClass::temperature()
+int8_t SenseMeMagnetometerClass::temperature()
 {	uint8_t reg;
 
 	readReg(FXMS3110_DIE_TEMP, &reg);
@@ -253,7 +257,7 @@ int8_t EngduinoMagnetometerClass::temperature()
 * Set the Active bit in System Control Register 1
 *
 */
-void EngduinoMagnetometerClass::activate()
+void SenseMeMagnetometerClass::activate()
 {	uint8_t reg;
 
 	readReg(FXMS3110_CTRL_REG1,  &reg);
@@ -269,7 +273,7 @@ void EngduinoMagnetometerClass::activate()
 * Clear the Active bit in System Control Register 1
 *
 */
-void EngduinoMagnetometerClass::standby()
+void SenseMeMagnetometerClass::standby()
 {	uint8_t reg;
 	readReg(FXMS3110_CTRL_REG1,  &reg);
 	reg &= ~ACTIVE_MASK;
@@ -289,7 +293,7 @@ void EngduinoMagnetometerClass::standby()
 * nRegs parameter is omitted).
 *
 */
-void EngduinoMagnetometerClass::writeReg(int firstReg, const uint8_t *buf, uint8_t nRegs)
+void SenseMeMagnetometerClass::writeReg(int firstReg, const uint8_t *buf, uint8_t nRegs)
 {
 	// Write out the address of the first register, then the set of values
 	// for that and all subsequent registers. Release the I2C bus when we're done
@@ -312,7 +316,7 @@ void EngduinoMagnetometerClass::writeReg(int firstReg, const uint8_t *buf, uint8
 * nRegs parameter is omitted).
 *
 */
-void EngduinoMagnetometerClass::readReg(int firstReg, uint8_t *buf, uint8_t nRegs)
+void SenseMeMagnetometerClass::readReg(int firstReg, uint8_t *buf, uint8_t nRegs)
 {
 	// Write out the register we'd like to start with reading
 	// Hold the I2C bus since we're going to read values back
@@ -338,7 +342,6 @@ void EngduinoMagnetometerClass::readReg(int firstReg, uint8_t *buf, uint8_t nReg
 /*
  * Preinstantiate Objects
  */ 
-EngduinoMagnetometerClass EngduinoMagnetometer = EngduinoMagnetometerClass();
+SenseMeMagnetometerClass SenseMeMagnetometer = SenseMeMagnetometerClass();
 
 /** @} */
-#endif

@@ -1,24 +1,22 @@
 /**
-* \defgroup EngduinoMagnetometer Driver for Engduino Magnetometer
+* \defgroup SenseMeMagnetometer Driver for SenseMeMagnetometer
 * 
 * @{
 */
 
 /**
-* \file 
-* 		Engduino Magnetometer driver
+* \file * 		SenseMeMagnetometer driver
 * \author
-* 		Engduino team: support@engduino.org
+* 		SenseMeteam: support@SenseMe.org
 */
 
-#ifndef __ENGDUINOMAGNETOMETER_H__
-#define __ENGDUINOMAGNETOMETER_H__
+#ifndef __SENSEMEMAGNETOMETER_H__
+#define __SENSEMEMAGNETOMETER_H__
 
 #include <stdio.h>
 #include <Arduino.h>
-#include <Engduino.h>
+#include <SenseMe.h>
 
-#if defined (__BOARD_ENGDUINOV2) || defined(__BOARD_ENGDUINOV3)
 
 /***********************************************************************************************\
 * Public macros
@@ -206,7 +204,7 @@ enum
 * Public prototypes
 \***********************************************************************************************/
 
-class EngduinoMagnetometerClass 
+class SenseMeMagnetometerClass 
 {
 	private:
 		void activate();
@@ -215,7 +213,7 @@ class EngduinoMagnetometerClass
 		void readReg(int firstReg, uint8_t *buf, uint8_t nRegs=1);
 	
 	public:
-		EngduinoMagnetometerClass();
+		SenseMeMagnetometerClass();
 		void   begin();
 		void   end();
 		void   xyz(float buf[3]);
@@ -226,8 +224,8 @@ class EngduinoMagnetometerClass
 
 };
 
-extern EngduinoMagnetometerClass EngduinoMagnetometer;
+extern SenseMeMagnetometerClass SenseMeMagnetometer;
 
 #endif
-#endif
+
 /** @} */
