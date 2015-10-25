@@ -1,3 +1,5 @@
+/* A simple animation showing a dot bouncing up and down*/
+
 #include <SenseMeLEDMatrix.h>
 #include <Wire.h>
 
@@ -37,9 +39,43 @@ BM4[] =
     B00010000,
     B00000000,
     B00000000,
+    B00000000 },
+BM5[] =
+  { B00000000,
+    B00000000,
+    B00000000,
+    B00010000,
+    B00000000,
+    B00000000,
+    B00000000,
+    B00000000 },
+BM6[] =
+  { B00000000,
+    B00000000,
+    B00010000,
+    B00000000,
+    B00000000,
+    B00000000,
+    B00000000,
+    B00000000 },
+BM7[] =
+  { B00000000,
+    B00010000,
+    B00000000,
+    B00000000,
+    B00000000,
+    B00000000,
+    B00000000,
+    B00000000 },	
+BM8[] =
+  { B00010000,
+    B00000000,
+    B00000000,
+    B00000000,
+    B00000000,
+    B00000000,
+    B00000000,
     B00000000 };
-
-
     
 void setup() {
   // put your setup code here, to run once:
@@ -48,6 +84,7 @@ void setup() {
   SenseMeLEDMatrix.writeDisplay();
 }
 
+//define how fast the animation goes
 #define DELAYTIME 100	//
 
 
@@ -61,7 +98,24 @@ void loop() {
   delay(DELAYTIME);
   drawMap((unsigned char *)&BM4);
   delay(DELAYTIME);
+  drawMap((unsigned char *)&BM5);
+  delay(DELAYTIME);
+  drawMap((unsigned char *)&BM6);
+  delay(DELAYTIME);
+  drawMap((unsigned char *)&BM7);
+  delay(DELAYTIME);
+  drawMap((unsigned char *)&BM8);
   
+  
+  delay(DELAYTIME);
+  drawMap((unsigned char *)&BM8);
+  delay(DELAYTIME);
+  drawMap((unsigned char *)&BM7);
+  delay(DELAYTIME);
+  drawMap((unsigned char *)&BM6);
+  delay(DELAYTIME);
+  drawMap((unsigned char *)&BM5);
+  delay(DELAYTIME);
   drawMap((unsigned char *)&BM4);
   delay(DELAYTIME);
   drawMap((unsigned char *)&BM3);
@@ -79,8 +133,6 @@ void drawMap(unsigned char* myBitMap) {
   SenseMeLEDMatrix.writeDisplay();
   SenseMeLEDMatrix.drawBitmap(0, 0, myBitMap, 8, 8, LED_ON);
   SenseMeLEDMatrix.writeDisplay();
-
-
 }
 
 
