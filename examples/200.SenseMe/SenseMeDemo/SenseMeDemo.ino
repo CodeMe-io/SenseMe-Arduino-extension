@@ -1,8 +1,9 @@
 #include <Wire.h>
 #include <SenseMeAccelerometer.h>
-#include <SenseMeLEDMatrix.h>
+#include <SenseMeMatrixTwo.h>
+// for version 1 cubes 
+// #include <SenseMeMatrixOne.h> 
 
-//#include <Adafruit_NeoPixel.h>
 #include <SenseMeNeopixel.h>
 #include <SHT2x.h>
 /*

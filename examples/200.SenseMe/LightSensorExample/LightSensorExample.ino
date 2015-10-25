@@ -1,6 +1,8 @@
 #include <SenseMeLightSensor.h>
 #include <Wire.h>
-#include <SenseMeLEDMatrix.h>
+#include <SenseMeMatrixTwo.h>
+// for version 1 cubes 
+// #include <SenseMeMatrixOne.h> 
 #include <SenseMeNeopixel.h>
 
 

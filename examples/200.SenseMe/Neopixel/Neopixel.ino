@@ -10,7 +10,7 @@ int dir = 0;
 
 void loop() {
   // put your main code here, to run repeatedly:
-  SenseMeNeopixel.setColor(255,255,255, brightness);
+  SenseMeNeopixel.setColor(255,15,200, brightness);
   if (dir == 0) 
 	brightness ++;
   else 
