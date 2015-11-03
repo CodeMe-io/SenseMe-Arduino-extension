@@ -1,4 +1,12 @@
+<<<<<<< HEAD
 #include <SenseMeLEDMatrix.h>
+=======
+/* A simple animation showing a dot bouncing up and down*/
+
+#include <SenseMeMatrixTwo.h>
+// for version 1 cubes 
+// #include <SenseMeMatrixOne.h> 
+>>>>>>> V2
 #include <Wire.h>
 
 static const uint8_t PROGMEM
