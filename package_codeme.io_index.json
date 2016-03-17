@@ -1,0 +1,41 @@
+{
+   "packages":[
+      {
+         "name":"CodeMe",
+         "maintainer":"CodeMe Project",
+         "websiteURL":"codeme.io",
+         "email":"support@codeme.io",
+         "platforms":[
+            {
+               "name":"CodeMe SenseMe board",
+               "architecture":"avr",
+               "version":"1.1.0",
+               "category":"Contributed",
+               "url":"codeme.io/Arduino_web/SenseMe_extension.tar.gz",
+               "archiveFileName":"master.zip",
+               "checksum":"SHA-256:6b792a892631a2e5eabc2f7c9ab1a590",
+               "size":"19678254",
+               "help":{
+                  "online":"support@codeme.io"
+               },
+               "boards":[
+                  { "name":"SenseMe" }
+               ],
+               "toolsDependencies":[
+                  {
+                     "packager":"arduino",
+                     "name":"avr-gcc",
+                     "version":"4.8.1-arduino5"
+                  },
+                  {
+                     "packager":"arduino",
+                     "name":"avrdude",
+                     "version":"6.0.1-arduino5"
+                  }
+               ]
+            },
+         ],
+         "tools":[]
+      }
+   ]
+}
